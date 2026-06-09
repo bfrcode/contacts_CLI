@@ -7,7 +7,7 @@ app = typer.Typer()
 @app.command()
 def init():
     init_db()
-    print("green]✓[/green]Base de donnée initialisée avec succès")
+    print("[green]Base de donnée initialisée avec succès[/green]")
 
 if __name__ == "__main__":
     app()
