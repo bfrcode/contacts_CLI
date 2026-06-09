@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS people (
         ON UPDATE CASCADE
 );
 
-CREATE INDEX idx_people_name ON people(people_name);
-CREATE INDEX idx_people_enterprise ON people(fk_enterprise);
-CREATE INDEX idx_enterprise_name ON enterprise(enterprise_name);
-CREATE INDEX idx_speciality_type ON speciality(speciality_type);
+CREATE INDEX IF NOT EXISTS idx_people_name ON people(people_name);
+CREATE INDEX IF NOT EXISTS idx_people_enterprise ON people(fk_enterprise);
+CREATE INDEX IF NOT EXISTS idx_enterprise_name ON enterprise(enterprise_name);
+CREATE INDEX IF NOT EXISTS idx_speciality_type ON speciality(speciality_type);
