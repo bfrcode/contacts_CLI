@@ -26,3 +26,9 @@ class Company:
 
 def get_all(conn) -> list[Company]:
     return
+
+def add_company(conn):
+    """Ajoute une société dans la base de donnée"""
+    with conn.cursor() as cursor:
+        cursor.execute("INSER INTO company (company_name, company_address, company_phone, company_mail, company_speciality, company_note) VALUES (?, ?, ?, ?, ?, ?)")
+    
