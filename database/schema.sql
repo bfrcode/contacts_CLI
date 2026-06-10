@@ -3,14 +3,14 @@ CREATE TABLE IF NOT EXISTS speciality (
     speciality_type TEXT UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS enterprise (
-    enterprise_id INTEGER PRIMARY KEY,
-    enterprise_name TEXT NOT NULL,
-    enterprise_address TEXT,
-    enterprise_phone TEXT,
-    enterprise_mail TEXT,
+CREATE TABLE IF NOT EXISTS company (
+    company_id INTEGER PRIMARY KEY,
+    company_name TEXT NOT NULL,
+    company_address TEXT,
+    company_phone TEXT,
+    company_mail TEXT,
     fk_speciality INTEGER,
-    enterprise_note TEXT,
+    company_note TEXT,
     FOREIGN KEY (fk_speciality)
         REFERENCES speciality(speciality_id)
         ON DELETE SET NULL
@@ -23,15 +23,15 @@ CREATE TABLE IF NOT EXISTS people (
     people_name TEXT NOT NULL,
     people_phone_number TEXT,
     people_mail TEXT,
-    fk_enterprise INTEGER,
+    fk_company INTEGER,
     people_note TEXT,
-    FOREIGN KEY (fk_enterprise)
-        REFERENCES enterprise(enterprise_id)
+    FOREIGN KEY (fk_company)
+        REFERENCES company(company_id)
         ON DELETE SET NULL
         ON UPDATE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS idx_people_name ON people(people_name);
-CREATE INDEX IF NOT EXISTS idx_people_enterprise ON people(fk_enterprise);
-CREATE INDEX IF NOT EXISTS idx_enterprise_name ON enterprise(enterprise_name);
+CREATE INDEX IF NOT EXISTS idx_people_company ON people(fk_company);
+CREATE INDEX IF NOT EXISTS idx_company_name ON company(company_name);
 CREATE INDEX IF NOT EXISTS idx_speciality_type ON speciality(speciality_type);

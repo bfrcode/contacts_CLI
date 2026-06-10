@@ -1,0 +1,28 @@
+import sqlite3
+
+from dataclasses import dataclass
+
+@dataclass
+class Company:
+    company_id: int
+    company_name: int
+    company_address: str
+    company_phone: str
+    company_mail: str
+    company_speciality: int
+    company_note: str
+
+    @classmethod 
+    def from_row(cls, row: sqlite3.Row) -> "Company":
+        return cls (
+            company_id = row["company_id"]
+            company_name = row["company_name"]
+            company_address = row["company_address"]
+            company_phone = row["company_phone"]
+            company_mail = row["company_mail"]
+            company_speciality = row["company_speciality"]
+            company_note = row["company_note"]
+        )
+
+def get_all(conn) -> list[Company]:
+    return

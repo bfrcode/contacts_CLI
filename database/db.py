@@ -6,6 +6,7 @@ SCHEMA_PATH = BASE_DIR / "schema.sql"
 DB_PATH = BASE_DIR / "database.db"
 
 def get_connection() -> sqlite3.Connection:
+    """lance la connexion à la base de donnée"""
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row  # accès aux colonnes par nom : row["email"]
     conn.execute("PRAGMA foreign_keys = ON") # active les foreign keys, désactivée par défaut
@@ -13,6 +14,7 @@ def get_connection() -> sqlite3.Connection:
 
 
 def init_db() -> None:
+    """initialise la base donnée (la crée si non existante)"""
     with get_connection() as conn:
         with open(SCHEMA_PATH, "r") as f:
             conn.executescript(f.read())
