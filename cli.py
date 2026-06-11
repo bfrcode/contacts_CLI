@@ -1,7 +1,7 @@
 import typer
 from rich import print
 
-from db.db import init_db
+from database.db import init_db
 
 app = typer.Typer()
 
