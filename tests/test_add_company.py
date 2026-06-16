@@ -8,6 +8,6 @@ test = ("MA SOCIETE", "Adresse test", "0442809070", "mail@test.fr","Gros Oeuvre"
 
 add_company(conn, test)
 
-with conn.cursor() as cursor:
-    cursor.execute("SELECT * FROM company")
-    print(cursor.fetchall())
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM company")
+print(cursor.fetchall())

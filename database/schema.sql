@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS speciality (
 
 CREATE TABLE IF NOT EXISTS company (
     company_id INTEGER PRIMARY KEY,
-    company_name TEXT NOT NULL,
+    company_name TEXT NOT NULL UNIQUE,
     company_address TEXT,
     company_phone TEXT,
     company_mail TEXT,
