@@ -4,10 +4,16 @@ from database.db import get_connection
 from models.company import add_company
 
 conn = get_connection()
-test = ("MA SOCIETE", "Adresse test", "0442809070", "mail@test.fr","Gros Oeuvre","Test Cédric")
+name = "MA SOCIETE"
+address = "Adresse test"
+phone = "0442809070"
+mail = "mail@test.fr"
+speciality = "Gros Oeuvre"
+note = "Test Cédric"
 
-add_company(conn, test)
+add_company(conn, name, address, phone, mail, speciality, note)
 
 cursor = conn.cursor()
-cursor.execute("SELECT * FROM company")
-print(cursor.fetchall())
+rows = cursor.execute("SELECT * FROM company")
+for row in rows:
+    print(dict(row))
