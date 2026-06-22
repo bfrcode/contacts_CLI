@@ -29,9 +29,15 @@ class Company:
 
 def add_company(conn: sqlite3.Connection, company: Company, speciality_name: str) -> Company:
     """Ajoute une société dans la base de donnée"""
+    if not company.name:
+        raise ValueError("Le nom de la société ne peut pas être vide")
+    
     with conn:
-        cursor = conn.cursor()
         speciality = Speciality(id=None, name=speciality_name)
         speciality = get_or_create_speciality(conn, speciality)
+        cursor = conn.cursor()
         cursor.execute("INSERT OR IGNORE INTO company (company_name, company_address, company_phone, company_mail, fk_speciality, company_note) VALUES (?, ?, ?, ?, ?, ?)", (company.name, company.address, company.phone, company.mail, speciality.id, company.note))
+        if cursor.rowcount == 0:
+            raise ValueError(f"Une société nommée '{company.name}' existe déjà")
+        company.id = cursor.lastrowid
         return company

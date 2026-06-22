@@ -18,6 +18,8 @@ class Speciality:
 def get_or_create_speciality(conn: sqlite3.Connection, speciality: Speciality) -> Speciality:
     """Retourne l'id d'une spécialité ou la crée si elle n'existe pas"""
     speciality_name = normalize_speciality(speciality.name)
+    if not speciality_name:
+        raise ValueError("Le nom de la spécialité ne peut pas être vide")
     cursor = conn.cursor()
     cursor.execute("INSERT OR IGNORE INTO speciality(speciality_type) VALUES (?)", (speciality_name,))
     cursor.execute("SELECT speciality_id FROM speciality WHERE speciality_type = ?", (speciality_name,))
