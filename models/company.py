@@ -1,6 +1,6 @@
 import sqlite3
 
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 
 from .speciality import Speciality
 from .speciality import get_or_create_speciality
@@ -17,6 +17,7 @@ class Company:
 
     @classmethod
     def from_row(cls, row: sqlite3.Row) -> "Company":
+        """Construit une instance Company à partir d'un objet sqlite3.Row"""
         return cls(
             id=row["company_id"],
             name=row["company_name"],
@@ -41,3 +42,19 @@ def add_company(conn: sqlite3.Connection, company: Company, speciality_name: str
             raise ValueError(f"Une société nommée '{company.name}' existe déjà")
         company.id = cursor.lastrowid
         return company
+    
+def show_company(conn: sqlite3.Connection, name: str) -> Company:
+    """Affiche une société en particulier"""
+    if not name:
+        raise ValueError("Le nom de la société ne peut pas être vide")
+    
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT company WHERE name = ?", (name,))
+        result = cursor.fetchone()
+        company = Company.from_row(result)
+        return company
+
+
+
+

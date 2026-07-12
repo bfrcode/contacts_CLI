@@ -1,14 +1,10 @@
 import typer
-from rich import print
 
-from database.db import init_db
+from commands import company_cmd, database_cmd
 
 app = typer.Typer()
-
-@app.command()
-def init():
-    init_db()
-    print("[green]Base de donnée initialisée avec succès[/green]")
+app.add_typer(company_cmd.app, name="company")
+app.add_typer(database_cmd.app, name="database")
 
 if __name__ == "__main__":
     app()

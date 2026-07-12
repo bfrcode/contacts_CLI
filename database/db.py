@@ -12,7 +12,6 @@ def get_connection() -> sqlite3.Connection:
     conn.execute("PRAGMA foreign_keys = ON") # active les foreign keys, désactivée par défaut
     return conn
 
-
 def init_db() -> None:
     """initialise la base donnée (la crée si non existante)"""
     with get_connection() as conn:
