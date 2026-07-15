@@ -3,6 +3,7 @@ from dataclasses import fields
 
 from rich.console import Console
 from rich.prompt import Prompt, Confirm
+from rich.table import Table
 
 from models import Company
 
@@ -49,4 +50,10 @@ def add_render(new: Company) -> Company:
 
 def show_render(company: Company) -> None:
     """Affichage de la fonction show_company"""
-    
+    table = Table(title="Entreprises", box=box.MINIMAL)
+    table.add_column("Nom", justify="left", style="bold cyan")
+    table.add_column("Adresse", justify="left", style="white", no_wrap=True)
+    table.add_column("Téléphone", justify="left", style="white", no_wrap=True)
+    table.add_column("Mail", justify="left", style="white")
+    table.add_column("Spécialité", justify="left", style="yellow")
+    table.add_column("Note", justify="left", style="green")
