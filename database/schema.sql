@@ -9,12 +9,21 @@ CREATE TABLE IF NOT EXISTS company (
     company_address TEXT,
     company_phone TEXT,
     company_mail TEXT,
-    fk_speciality INTEGER,
-    company_note TEXT,
-    FOREIGN KEY (fk_speciality)
+    company_note TEXT
+);
+
+CREATE TABLE IF NOT EXISTS company_speciality (
+    fk_company_id INTEGER NOT NULL,
+    fk_speciality_id INTEGER NOT NULL,
+    is_main INTEGER NOT NULL DEFAULT 0 CHECK (is_main IN (0, 1)),
+    PRIMARY KEY (fk_company_id, fk_speciality_id),
+    FOREIGN KEY (fk_company_id)
+        REFERENCES company(company_id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (fk_speciality_id)
         REFERENCES speciality(speciality_id)
-        ON DELETE SET NULL
-        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS people (
@@ -23,15 +32,14 @@ CREATE TABLE IF NOT EXISTS people (
     people_name TEXT NOT NULL,
     people_phone_number TEXT,
     people_mail TEXT,
-    fk_company INTEGER,
+    fk_company_id INTEGER,
     people_note TEXT,
-    FOREIGN KEY (fk_company)
+    FOREIGN KEY (fk_company_id)
         REFERENCES company(company_id)
-        ON DELETE SET NULL
-        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE INDEX IF NOT EXISTS idx_people_name ON people(people_name);
-CREATE INDEX IF NOT EXISTS idx_people_company ON people(fk_company);
-CREATE INDEX IF NOT EXISTS idx_company_name ON company(company_name);
-CREATE INDEX IF NOT EXISTS idx_speciality_type ON speciality(speciality_type);
+CREATE INDEX IF NOT EXISTS idx_people_company ON people(fk_company_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_one_main ON company_speciality(fk_company_id) WHERE is_main = 1;
+CREATE INDEX IF NOT EXISTS idx_speciality_id ON company_speciality(fk_speciality_id);
