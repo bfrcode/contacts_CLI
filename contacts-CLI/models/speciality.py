@@ -2,8 +2,6 @@ import sqlite3
 
 from dataclasses import dataclass
 
-from utils.string import normalize_speciality
-
 @dataclass
 class Speciality:
     id: int | None
