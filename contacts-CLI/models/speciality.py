@@ -15,6 +15,11 @@ class Speciality:
             id=row["speciality_id"],
             name=row["speciality_type"],
         )
+
+def normalize_speciality(name: str) -> str:
+    """Normalise le nom d'une spécialité en l'écrivant avec la première lettre en majuscule et le reste en minuscule"""
+    return name.strip().lower().capitalize()
+
 def get_or_create_speciality(conn: sqlite3.Connection, speciality: Speciality) -> Speciality:
     """Retourne l'id d'une spécialité ou la crée si elle n'existe pas"""
     speciality_name = normalize_speciality(speciality.name)
