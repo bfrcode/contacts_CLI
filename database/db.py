@@ -1,10 +1,9 @@
 from pathlib import Path
 import sqlite3
 
-from utils import show_error
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-SCHEMA_PATH = BASE_DIR / "contacts-CLI" / "database" / "schema.sql"
+SCHEMA_PATH = Path(__file__) / "schema.sql"
 DB_FOLDER = BASE_DIR / "data"
 DB_PATH = BASE_DIR / "data" / "database.db"
 
@@ -17,10 +16,7 @@ def get_connection() -> sqlite3.Connection:
 
 def init_db() -> None:
     """initialise la base donnée (la crée si non existante)"""
-    try:
-         DB_FOLDER.mkdir()
-    except FileExistsError as e:
-        show_error(e)
+    DB_FOLDER.mkdir()
 
     with get_connection() as conn:
         with open(SCHEMA_PATH, "r") as f:
