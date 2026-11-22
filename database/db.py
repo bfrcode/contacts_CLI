@@ -3,9 +3,9 @@ import sqlite3
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-SCHEMA_PATH = Path(__file__) / "schema.sql"
+SCHEMA_PATH = Path(__file__).resolve().parent / "schema.sql"
 DB_FOLDER = BASE_DIR / "data"
-DB_PATH = BASE_DIR / "data" / "database.db"
+DB_PATH = DB_FOLDER / "contacts.db"
 
 def get_connection() -> sqlite3.Connection:
     """lance la connexion à la base de donnée"""
@@ -16,7 +16,7 @@ def get_connection() -> sqlite3.Connection:
 
 def init_db() -> None:
     """initialise la base donnée (la crée si non existante)"""
-    DB_FOLDER.mkdir()
+    DB_FOLDER.mkdir(exist_ok=True)
 
     with get_connection() as conn:
         with open(SCHEMA_PATH, "r") as f:
