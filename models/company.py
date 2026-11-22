@@ -24,7 +24,6 @@ class Company:
             address=row["company_address"],
             phone=row["company_phone"],
             mail=row["company_mail"],
-            speciality=row["fk_speciality"],
             note=row["company_note"],
         )
 
